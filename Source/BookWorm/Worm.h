@@ -21,10 +21,6 @@ public:
 	// Sets default values for this pawn's properties
 	AWorm();
 
-private:
-	UFUNCTION()
-	void MovementInputPressed(FInputActionValue& Value);
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -42,9 +38,9 @@ protected:
 
 	//Input Ones
 	UPROPERTY(EditDefaultsOnly)
-	UInputMappingContext* Map;
+	UInputMappingContext* MoveInputMap;
 	UPROPERTY(EditDefaultsOnly)
-	UInputAction* InputAction;
+	UInputAction* MoveAction;
 
 public:	
 	// Called every frame
@@ -53,4 +49,21 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+private:
+	UFUNCTION()
+	void MovementInputPressed(const FInputActionValue& Value);
+	UFUNCTION()
+	void GoUnderground();
+	UFUNCTION()
+	void GoAboveGround();
+	UFUNCTION()
+	void OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	UPROPERTY()
+	float UndergroundValue = 0.0;
+	UPROPERTY()
+	int GroundsCollided = 0;
 };
