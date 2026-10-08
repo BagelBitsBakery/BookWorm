@@ -7,6 +7,10 @@
 #include "Worm.generated.h"
 
 class UCameraComponent;
+class USpringArmComponent;
+class UInputMappingContext;
+class UInputAction;
+struct FInputActionValue;
 
 UCLASS()
 class BOOKWORM_API AWorm : public APawn
@@ -21,10 +25,22 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	UCameraComponent* Cam;
 	UPROPERTY(EditDefaultsOnly)
+	USpringArmComponent* SpringArm;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	UStaticMeshComponent* HeadMesh;
+	UPROPERTY(EditDefaultsOnly)
+	float MoveSpeed = 1000.f;
+	UPROPERTY(EditDefaultsOnly)
+	float AirDrag = 750.f;
+
+	//Input Ones
+	UPROPERTY(EditDefaultsOnly)
+	UInputMappingContext* MoveInputMap;
+	UPROPERTY(EditDefaultsOnly)
+	UInputAction* MoveAction;
 
 public:	
 	// Called every frame
@@ -33,4 +49,21 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+private:
+	UFUNCTION()
+	void MovementInputPressed(const FInputActionValue& Value);
+	UFUNCTION()
+	void GoUnderground();
+	UFUNCTION()
+	void GoAboveGround();
+	UFUNCTION()
+	void OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	UPROPERTY()
+	float UndergroundValue = 0.0;
+	UPROPERTY()
+	int GroundsCollided = 0;
 };
