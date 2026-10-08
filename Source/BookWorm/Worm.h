@@ -6,10 +6,9 @@
 #include "GameFramework/Pawn.h"
 #include "Worm.generated.h"
 
-class UCameraComponent;
-class USpringArmComponent;
 class UInputMappingContext;
 class UInputAction;
+class UCameraFollowComponent;
 struct FInputActionValue;
 
 UCLASS()
@@ -26,9 +25,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	UCameraComponent* Cam;
-	UPROPERTY(EditDefaultsOnly)
-	USpringArmComponent* SpringArm;
+	UCameraFollowComponent* Cam;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	UStaticMeshComponent* HeadMesh;
 	UPROPERTY(EditDefaultsOnly)

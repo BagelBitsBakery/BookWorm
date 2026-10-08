@@ -2,12 +2,11 @@
 
 
 #include "Worm.h"
-#include "Camera/CameraComponent.h"
-#include "GameFramework/SpringArmComponent.h"
 #include "InputActionValue.h"
 #include "InputMappingContext.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "CameraFollowComponent.h"
 
 // Sets default values
 AWorm::AWorm()
@@ -21,14 +20,7 @@ AWorm::AWorm()
 	HeadMesh->SetSimulatePhysics(true);
 	HeadMesh->SetEnableGravity(false);
 
-	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Arm"));
-	SpringArm->SetupAttachment(HeadMesh);
-	SpringArm->bUsePawnControlRotation = true;
-	SpringArm->bDoCollisionTest = false;
-
-	Cam = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	Cam->SetupAttachment(SpringArm);
-	Cam->SetRelativeLocation(FVector(0.f, 0.f, 20.f));
+	Cam = CreateDefaultSubobject<UCameraFollowComponent>(TEXT("Camera"));
 
 	bUseControllerRotationYaw = true;
 	bUseControllerRotationPitch = true;
