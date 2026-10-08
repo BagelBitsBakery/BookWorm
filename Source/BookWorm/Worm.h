@@ -7,6 +7,10 @@
 #include "Worm.generated.h"
 
 class UCameraComponent;
+class USpringArmComponent;
+class UInputMappingContext;
+class UInputAction;
+struct FInputActionValue;
 
 UCLASS()
 class BOOKWORM_API AWorm : public APawn
@@ -17,14 +21,30 @@ public:
 	// Sets default values for this pawn's properties
 	AWorm();
 
+private:
+	UFUNCTION()
+	void MovementInputPressed(FInputActionValue& Value);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	UCameraComponent* Cam;
 	UPROPERTY(EditDefaultsOnly)
+	USpringArmComponent* SpringArm;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	UStaticMeshComponent* HeadMesh;
+	UPROPERTY(EditDefaultsOnly)
+	float MoveSpeed = 1000.f;
+	UPROPERTY(EditDefaultsOnly)
+	float AirDrag = 750.f;
+
+	//Input Ones
+	UPROPERTY(EditDefaultsOnly)
+	UInputMappingContext* Map;
+	UPROPERTY(EditDefaultsOnly)
+	UInputAction* InputAction;
 
 public:	
 	// Called every frame
