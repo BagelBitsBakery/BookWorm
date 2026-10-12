@@ -46,7 +46,7 @@ void AWorm::Tick(float DeltaTime)
 	float VelStrength = FVector::Distance(HeadMesh->GetPhysicsLinearVelocity(), FVector::Zero());
 	FVector VelNormal = HeadMesh->GetPhysicsLinearVelocity().GetSafeNormal();
 	float DragStrength = (VelStrength / MoveSpeed) * AirDrag;
-	VelStrength -= DragStrength * DeltaTime;
+	VelStrength -= DragStrength * DeltaTime * UndergroundValue;
 	HeadMesh->SetPhysicsLinearVelocity(VelStrength * VelNormal);
 	//Adding 
 	FVector ImpulseAddition = GetActorForwardVector() * MoveSpeed * DeltaTime;
@@ -73,7 +73,7 @@ void AWorm::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AWorm::MovementInputPressed(const FInputActionValue& Value)
 {
-	FVector2D MovementVal = Value.Get<FVector2D>();
+	FVector2D MovementVal = Value.Get<FVector2D>() * FMath::Lerp(0.35,1.f,UndergroundValue);
 	AddControllerPitchInput(MovementVal.Y);
 	AddControllerYawInput(MovementVal.X);
 }

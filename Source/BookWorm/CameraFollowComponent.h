@@ -24,5 +24,13 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	UPROPERTY(EditDefaultsOnly)
+	float FlySpeed = 1200.f;
+	UPROPERTY(EditDefaultsOnly)
+	FVector2D Offset = FVector2D(1000.f, 100.f);
+	UPROPERTY(EditDefaultsOnly)
+	float CloseFade = 1000.f;
+	UPROPERTY(EditDefaultsOnly)
+	float DistanceFromGround = 250;
 		
 };

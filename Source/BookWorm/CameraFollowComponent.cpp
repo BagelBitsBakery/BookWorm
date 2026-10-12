@@ -30,7 +30,11 @@ void UCameraFollowComponent::BeginPlay()
 	if (IsValid(PlayerControl)) {
 		PlayerControl->SetViewTarget(Drone);
 	}
-	
+	Drone->InitCamPos();
+	Drone->FlySpeed = FlySpeed;
+	Drone->Offset = Offset;
+	Drone->CloseFade = CloseFade;
+	Drone->DistanceFromGround = DistanceFromGround;
 }
 
 

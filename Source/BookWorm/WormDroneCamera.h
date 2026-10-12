@@ -20,13 +20,24 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	UFUNCTION()
+	void StayAboveGround();
+
 public:
 	virtual void Tick(float DeltaTime) override;
+	UFUNCTION()
+	void InitCamPos();
 
 	UPROPERTY()
 	AActor* FollowActor;
 
 	UPROPERTY()
-	float FlySpeed = 400.f;
+	float FlySpeed = 1200.f;
+	UPROPERTY()
+	FVector2D Offset = FVector2D(1000.f, 100.f);
+	UPROPERTY()
+	float CloseFade = 1000.f;
+	UPROPERTY()
+	float DistanceFromGround = 250;
 	
 };
