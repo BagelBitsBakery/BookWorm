@@ -5,6 +5,7 @@
 #include "ScoreGiveComponent.h"
 
 AScoreObject::AScoreObject() {
+	PrimaryActorTick.bCanEverTick = true;
 	ScoreGive = CreateDefaultSubobject<UScoreGiveComponent>(TEXT("Score"));
 }
 

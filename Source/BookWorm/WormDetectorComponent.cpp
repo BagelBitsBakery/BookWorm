@@ -10,15 +10,18 @@ UWormDetectorComponent::UWormDetectorComponent()
 	
 }
 
-
 // Called when the game starts
 void UWormDetectorComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	ShapeForDetection = Cast<UShapeComponent>(ComponentRef.GetComponent(GetOwner()));
 	if (IsValid(ShapeForDetection)) {
 		ShapeForDetection->OnComponentBeginOverlap.AddDynamic(this, &UWormDetectorComponent::OverlapBegin);
-		ShapeForDetection->AttachToComponent(GetOwner()->GetRootComponent(),FAttachmentTransformRules(EAttachmentRule::KeepRelative,true));
+		//ShapeForDetection->AttachToComponent(GetOwner()->GetRootComponent(),FAttachmentTransformRules(EAttachmentRule::KeepRelative,true));
+	}
+	else {
+		UE_LOG(LogTemp, Error, TEXT("Worm Detect Has No Shape %s"),*GetOwner()->GetName());
 	}
 	
 }

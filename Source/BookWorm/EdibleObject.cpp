@@ -7,10 +7,11 @@
 // Sets default values
 AEdibleObject::AEdibleObject()
 {
+	PrimaryActorTick.bCanEverTick = true;
+
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(RootComponent);
 	Detector = CreateDefaultSubobject<UWormDetectorComponent>(TEXT("Detection"));
-	Detector->SetupAttachment(Mesh);
 }
 
 // Called when the game starts or when spawned

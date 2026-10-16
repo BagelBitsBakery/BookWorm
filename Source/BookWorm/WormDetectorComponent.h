@@ -9,13 +9,16 @@
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class BOOKWORM_API UWormDetectorComponent : public USceneComponent
+class BOOKWORM_API UWormDetectorComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
 	UWormDetectorComponent();
+
+	UPROPERTY()
+	UShapeComponent* ShapeForDetection;
 
 protected:
 	// Called when the game starts
@@ -28,6 +31,7 @@ public:
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnWormDetected);
 	UPROPERTY(BlueprintAssignable)
 	FOnWormDetected OnWormDetected;
-	UPROPERTY(EditDefaultsOnly)
-	UShapeComponent* ShapeForDetection;
+
+	UPROPERTY(BlueprintReadWrite,EditDefaultsOnly)
+	FComponentReference ComponentRef;
 };
