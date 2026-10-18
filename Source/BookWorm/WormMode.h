@@ -16,6 +16,11 @@ class BOOKWORM_API AWormMode : public AGameModeBase
 
 private:
 	int Score = 0;
+protected:
+	virtual void BeginPlay() override;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UUserWidget> WidgetClass;
 public:
 	void AlterScore(int ScoreChange);
 	void SetScore(int NewScore);

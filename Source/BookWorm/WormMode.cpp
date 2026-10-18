@@ -2,6 +2,14 @@
 
 
 #include "WormMode.h"
+#include "Blueprint/UserWidget.h"
+#include "Kismet/GameplayStatics.h"
+
+void AWormMode::BeginPlay()
+{
+	UUserWidget* NewWidget = CreateWidget<UUserWidget>(GetWorld(),WidgetClass);
+	NewWidget->AddToViewport();
+}
 
 void AWormMode::AlterScore(int ScoreChange)
 {
