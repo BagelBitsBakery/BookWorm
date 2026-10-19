@@ -26,7 +26,7 @@ public:
 	void SetScore(int NewScore);
 	int GetScore();
 	
-	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnScoreChanged);
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnScoreChanged,int,NewScore);
 	UPROPERTY(BlueprintAssignable)
 	FOnScoreChanged OnScoreChanged;
 };

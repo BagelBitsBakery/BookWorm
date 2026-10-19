@@ -26,8 +26,6 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	UCameraFollowComponent* Cam;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	UStaticMeshComponent* HeadMesh;
 	UPROPERTY(EditDefaultsOnly)
 	float MoveSpeed = 1000.f;
 	UPROPERTY(EditDefaultsOnly)
@@ -45,6 +43,9 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UStaticMeshComponent* HeadMesh;
 
 private:
 	UFUNCTION()

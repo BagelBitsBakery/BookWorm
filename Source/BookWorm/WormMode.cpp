@@ -20,7 +20,7 @@ void AWormMode::AlterScore(int ScoreChange)
 void AWormMode::SetScore(int NewScore)
 {
 	Score = NewScore;
-	OnScoreChanged.Broadcast();
+	OnScoreChanged.Broadcast(NewScore);
 	UE_LOG(LogTemp, Display, TEXT("Score Changed %i"), Score);
 }
 

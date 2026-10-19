@@ -7,6 +7,7 @@
 #include "Components/SphereComponent.h"
 #include "WormDetectorComponent.generated.h"
 
+class AWorm;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BOOKWORM_API UWormDetectorComponent : public UActorComponent
@@ -31,6 +32,9 @@ public:
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnWormDetected);
 	UPROPERTY(BlueprintAssignable)
 	FOnWormDetected OnWormDetected;
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnWormEntered,AWorm*,Worm);
+	UPROPERTY(BlueprintAssignable)
+	FOnWormEntered OnWormEntered;
 
 	UPROPERTY(BlueprintReadWrite,EditDefaultsOnly)
 	FComponentReference ComponentRef;
