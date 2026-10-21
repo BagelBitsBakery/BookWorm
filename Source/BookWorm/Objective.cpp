@@ -35,6 +35,7 @@ void AObjective::StartObjective()
 		Mode->ObjectiveStarted(ObjectiveName);
 		UE_LOG(LogTemp, Display, TEXT("Objective Start Attempted"));
 	}
+	OnObjectiveStarted.Broadcast();
 }
 
 void AObjective::EndObjective()

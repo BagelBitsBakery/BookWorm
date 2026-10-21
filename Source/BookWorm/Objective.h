@@ -38,6 +38,10 @@ protected:
 	USphereComponent* EnterDetection;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	FName ObjectiveName;
+
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnObjectiveStarted);
+	UPROPERTY(BlueprintAssignable)
+	FOnObjectiveStarted OnObjectiveStarted;
 	
 private:
 	UPROPERTY();
