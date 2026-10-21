@@ -7,8 +7,10 @@
 
 void AWormMode::BeginPlay()
 {
-	UUserWidget* NewWidget = CreateWidget<UUserWidget>(GetWorld(),WidgetClass);
+	UUserWidget* NewWidget = CreateWidget<UUserWidget>(GetWorld(),ScoreWidgetClass);
 	NewWidget->AddToViewport();
+	UUserWidget* NewScoreWidget = CreateWidget<UUserWidget>(GetWorld(), ObjectiveWidgetClass);
+	NewScoreWidget->AddToViewport();
 }
 
 void AWormMode::AlterScore(int ScoreChange)
@@ -27,4 +29,26 @@ void AWormMode::SetScore(int NewScore)
 int AWormMode::GetScore()
 {
 	return Score;
+}
+
+void AWormMode::ObjectiveStarted(FName ObjectiveName)
+{
+	CurrentActiveObjectives.Add(ObjectiveName);
+	OnObjectiveAdded.Broadcast(ObjectiveName);
+}
+
+void AWormMode::ObjectiveEnded(FName ObjectiveName)
+{
+	int ObjectiveIndex = CurrentActiveObjectives.Find(ObjectiveName);
+	CurrentActiveObjectives.RemoveAt(ObjectiveIndex);
+	OnObjectiveRemoved.Broadcast(ObjectiveIndex);
+}
+
+void AWormMode::ObjectiveStatusChanged(FName ObjectiveName, FString NewStatus)
+{
+	if (!CurrentActiveObjectives.Contains(ObjectiveName)) {
+		return;
+	}
+	int ObjectiveIndex = CurrentActiveObjectives.Find(ObjectiveName);
+	OnObjectiveUpdated.Broadcast(ObjectiveIndex, NewStatus);
 }

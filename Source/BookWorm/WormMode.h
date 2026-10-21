@@ -20,13 +20,35 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UUserWidget> WidgetClass;
+	TSubclassOf<UUserWidget> ScoreWidgetClass;
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UUserWidget> ObjectiveWidgetClass;
+	UPROPERTY()
+	TArray<FName> CurrentActiveObjectives = {};
 public:
+	UFUNCTION()
 	void AlterScore(int ScoreChange);
+	UFUNCTION()
 	void SetScore(int NewScore);
+	UFUNCTION()
 	int GetScore();
+	UFUNCTION()
+	void ObjectiveStarted(FName ObjectiveName);
+	UFUNCTION()
+	void ObjectiveEnded(FName ObjectiveName);
+	UFUNCTION(BlueprintCallable)
+	void ObjectiveStatusChanged(FName ObjectiveName, FString NewStatus);
 	
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnScoreChanged,int,NewScore);
 	UPROPERTY(BlueprintAssignable)
 	FOnScoreChanged OnScoreChanged;
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnObjectiveAdded, FName, NewObjective);
+	UPROPERTY(BlueprintAssignable)
+	FOnObjectiveAdded OnObjectiveAdded;
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnObjectiveRemoved, int, ObjectiveIndex);
+	UPROPERTY(BlueprintAssignable)
+	FOnObjectiveRemoved OnObjectiveRemoved;
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnObjectiveUpdated, int, ObjectiveIndex, FString, NewStatus);
+	UPROPERTY(BlueprintAssignable)
+	FOnObjectiveUpdated OnObjectiveUpdated;
 };
