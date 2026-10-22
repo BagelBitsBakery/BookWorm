@@ -33,12 +33,14 @@ int AWormMode::GetScore()
 
 void AWormMode::ObjectiveStarted(FName ObjectiveName)
 {
+	if (CurrentActiveObjectives.Contains(ObjectiveName)) return;
 	CurrentActiveObjectives.Add(ObjectiveName);
 	OnObjectiveAdded.Broadcast(ObjectiveName);
 }
 
 void AWormMode::ObjectiveEnded(FName ObjectiveName)
 {
+	if (!CurrentActiveObjectives.Contains(ObjectiveName)) return;
 	int ObjectiveIndex = CurrentActiveObjectives.Find(ObjectiveName);
 	CurrentActiveObjectives.RemoveAt(ObjectiveIndex);
 	OnObjectiveRemoved.Broadcast(ObjectiveIndex);
@@ -46,9 +48,12 @@ void AWormMode::ObjectiveEnded(FName ObjectiveName)
 
 void AWormMode::ObjectiveStatusChanged(FName ObjectiveName, FString NewStatus)
 {
-	if (!CurrentActiveObjectives.Contains(ObjectiveName)) {
-		return;
-	}
+	if (!CurrentActiveObjectives.Contains(ObjectiveName)) return;
 	int ObjectiveIndex = CurrentActiveObjectives.Find(ObjectiveName);
 	OnObjectiveUpdated.Broadcast(ObjectiveIndex, NewStatus);
+}
+
+bool AWormMode::HasObjective(FName ObjectiveName)
+{
+	return CurrentActiveObjectives.Contains(ObjectiveName);
 }

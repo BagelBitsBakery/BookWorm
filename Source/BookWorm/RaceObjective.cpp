@@ -30,6 +30,7 @@ void ARaceObjective::StartRace()
 	CurrentCheckpointIndex = 0;
 	Checkpoints[CurrentCheckpointIndex]->ActivateCheckpoint();
 	RaceTimer->StartRaceTimer();
+	UpdateObStatus(FString::Printf(TEXT("(%i/%i)"), 0, Checkpoints.Num()));
 }
 
 void ARaceObjective::ProgressCheckpoint()
@@ -38,7 +39,13 @@ void ARaceObjective::ProgressCheckpoint()
 	CurrentCheckpointIndex += 1;
 	if (CurrentCheckpointIndex >= Checkpoints.Num()) {
 		RaceTimer->EndRaceTimer();
-		EndObjective();
+		if (RaceTimer->GetRaceTime() <= TimeRequired) {
+			EndObjective();
+		}
+		else {
+			IsActive = false;
+			UpdateObStatus(FString("Failed, Try Again"));
+		}
 	}
 	else {
 		Checkpoints[CurrentCheckpointIndex]->ActivateCheckpoint();

@@ -38,6 +38,8 @@ public:
 	void ObjectiveEnded(FName ObjectiveName);
 	UFUNCTION(BlueprintCallable)
 	void ObjectiveStatusChanged(FName ObjectiveName, FString NewStatus);
+	UFUNCTION()
+	bool HasObjective(FName ObjectiveName);
 	
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnScoreChanged,int,NewScore);
 	UPROPERTY(BlueprintAssignable)

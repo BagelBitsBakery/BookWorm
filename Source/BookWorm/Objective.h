@@ -43,11 +43,11 @@ protected:
 	UPROPERTY(BlueprintAssignable)
 	FOnObjectiveStarted OnObjectiveStarted;
 	
-private:
 	UPROPERTY();
 	bool IsActive = false;
 	UPROPERTY();
 	bool IsComplete = false;
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

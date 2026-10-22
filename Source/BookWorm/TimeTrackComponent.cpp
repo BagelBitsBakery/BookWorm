@@ -36,6 +36,7 @@ void UTimeTrackComponent::StartRaceTimer()
 	TimerDisplay->AddToViewport();
 	TimerDisplay->UpdateTimer(0.f);
 	SetComponentTickEnabled(true);
+	TimeElapsed = 0.f;
 }
 
 void UTimeTrackComponent::EndRaceTimer()
