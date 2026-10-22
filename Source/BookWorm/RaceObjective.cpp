@@ -3,6 +3,14 @@
 
 #include "RaceObjective.h"
 
+ARaceObjective::ARaceObjective() {
+	PrimaryActorTick.bCanEverTick = true;
+	RaceTimer = CreateDefaultSubobject<UTimeTrackComponent>(TEXT("Race Timer"));
+	RaceTimer->SetComponentTickEnabled(true);
+	RaceTimer->AddTickPrerequisiteActor(this);
+	RaceTimer->SetTickGroup(ETickingGroup::TG_DuringPhysics);
+}
+
 void ARaceObjective::BeginPlay()
 {
 	Super::BeginPlay();
@@ -21,7 +29,7 @@ void ARaceObjective::StartRace()
 {
 	CurrentCheckpointIndex = 0;
 	Checkpoints[CurrentCheckpointIndex]->ActivateCheckpoint();
-
+	RaceTimer->StartRaceTimer();
 }
 
 void ARaceObjective::ProgressCheckpoint()
@@ -29,6 +37,7 @@ void ARaceObjective::ProgressCheckpoint()
 	Checkpoints[CurrentCheckpointIndex]->DeactivateCheckpoint();
 	CurrentCheckpointIndex += 1;
 	if (CurrentCheckpointIndex >= Checkpoints.Num()) {
+		RaceTimer->EndRaceTimer();
 		EndObjective();
 	}
 	else {

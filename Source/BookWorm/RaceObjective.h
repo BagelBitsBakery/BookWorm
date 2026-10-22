@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Objective.h"
 #include "RaceCheckpoint.h"
+#include "TimeTrackComponent.h"
 #include "RaceObjective.generated.h"
 
 /**
@@ -15,12 +16,17 @@ class BOOKWORM_API ARaceObjective : public AObjective
 {
 	GENERATED_BODY()
 	
+	ARaceObjective();
+
 protected:
 	virtual void BeginPlay() override;
 	UFUNCTION()
 	void SetupCheckpoints();
 	UFUNCTION()
 	void StartRace();
+
+	UPROPERTY(EditDefaultsOnly)
+	UTimeTrackComponent* RaceTimer;
 	
 public:
 	UPROPERTY(EditAnywhere)
