@@ -27,10 +27,12 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	UTimeTrackComponent* RaceTimer;
-	UPROPERTY(EditDefaultsOnly)
-	float TimeRequired = 30.f;
+	
 	
 public:
+	UPROPERTY(EditAnywhere)
+	float TimeRequired = 30.f;
+
 	UPROPERTY(EditAnywhere)
 	TArray<ARaceCheckpoint*> Checkpoints;
 

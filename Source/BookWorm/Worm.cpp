@@ -43,14 +43,16 @@ void AWorm::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//Drag
+	float TempUnderground = UndergroundValue;
+	if (IsUnderSurface()) TempUnderground = 1.f;
 	float VelStrength = FVector::Distance(HeadMesh->GetPhysicsLinearVelocity(), FVector::Zero());
 	FVector VelNormal = HeadMesh->GetPhysicsLinearVelocity().GetSafeNormal();
 	float DragStrength = (VelStrength / MoveSpeed) * AirDrag;
-	VelStrength -= DragStrength * DeltaTime * UndergroundValue;
+	VelStrength -= DragStrength * DeltaTime * TempUnderground;
 	HeadMesh->SetPhysicsLinearVelocity(VelStrength * VelNormal);
 	//Adding 
 	FVector ImpulseAddition = GetActorForwardVector() * MoveSpeed * DeltaTime;
-	HeadMesh->AddImpulse(ImpulseAddition * UndergroundValue, FName(), true);
+	HeadMesh->AddImpulse(ImpulseAddition * TempUnderground, FName(), true);
 }
 
 // Called to bind functionality to input
@@ -93,7 +95,9 @@ void AWorm::GoAboveGround()
 void AWorm::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (OtherActor->ActorHasTag("DigGround")) {
+		if (ActorsInDig.Contains(OtherActor)) return;
 		GroundsCollided += 1;
+		ActorsInDig.Add(OtherActor);
 		if (GroundsCollided > 0 and UndergroundValue < 1.f) {
 			GoUnderground();
 		}
@@ -104,8 +108,25 @@ void AWorm::OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherAc
 {
 	if (OtherActor->ActorHasTag("DigGround")) {
 		GroundsCollided -= 1;
+		ActorsInDig.Remove(OtherActor);
 		if (GroundsCollided < 1 and UndergroundValue > 0.f) {
 			GoAboveGround();
 		}
 	}
+}
+
+bool AWorm::IsUnderSurface()
+{
+	FHitResult OutHit = FHitResult();
+	FVector ActorPos = GetActorLocation();
+	FVector Start = FVector(0.f, 0.f, 75000);
+	FVector End = ActorPos;
+	FCollisionQueryParams Params;
+	GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECollisionChannel::ECC_GameTraceChannel1, Params);
+	if (OutHit.bBlockingHit) {
+		HeadMesh->SetEnableGravity(false);
+		return true;
+	}
+	if (UndergroundValue != 1.f) HeadMesh->SetEnableGravity(true);
+	return false;
 }

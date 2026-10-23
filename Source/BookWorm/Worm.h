@@ -59,9 +59,15 @@ private:
 
 	UFUNCTION()
 	void OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	UFUNCTION()
+	bool IsUnderSurface();
+	
 
 	UPROPERTY()
 	float UndergroundValue = 0.0;
 	UPROPERTY()
 	int GroundsCollided = 0;
+
+	UPROPERTY()
+	TArray<AActor*> ActorsInDig = {};
 };

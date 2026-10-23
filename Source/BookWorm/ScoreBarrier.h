@@ -20,12 +20,12 @@ public:
 	// Sets default values for this actor's properties
 	AScoreBarrier();
 
+	UPROPERTY(EditAnywhere)
+	int ScoreRequired = 100;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	UPROPERTY(EditDefaultsOnly)
-	int ScoreRequired = 100;
 
 	UPROPERTY(EditDefaultsOnly)
 	UWormDetectorComponent* Detector;

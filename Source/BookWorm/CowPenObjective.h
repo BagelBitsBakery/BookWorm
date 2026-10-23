@@ -17,7 +17,9 @@ class BOOKWORM_API ACowPenObjective : public AObjective
 	GENERATED_BODY()
 
 	ACowPenObjective();
-	
+public:
+	UPROPERTY(EditDefaultsOnly)
+	int CowsNeeded = 3;
 protected:
 	virtual void BeginPlay() override;
 	UFUNCTION()
@@ -28,8 +30,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	UBoxComponent* BoxCollision;
 
-	UPROPERTY(EditDefaultsOnly)
-	int CowsNeeded = 3;
+	
 private:
 	UPROPERTY()
 	int CowsEntered = 0;
