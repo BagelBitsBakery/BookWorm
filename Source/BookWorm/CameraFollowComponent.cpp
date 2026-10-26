@@ -21,11 +21,11 @@ void UCameraFollowComponent::BeginPlay()
 	Super::BeginPlay();
 
 	AWormDroneCamera* Drone = GetWorld()->SpawnActor<AWormDroneCamera>(AWormDroneCamera::StaticClass(), GetOwner()->GetActorTransform());
-	Drone->FollowActor = GetOwner();
 	APawn* Pawn = Cast<APawn>(GetOwner());
 	if (!IsValid(Pawn)) {
 		return;
 	}
+	Drone->FollowActor = Pawn;
 	APlayerController* PlayerControl = Cast<APlayerController>(Pawn->GetController());
 	if (IsValid(PlayerControl)) {
 		PlayerControl->SetViewTarget(Drone);

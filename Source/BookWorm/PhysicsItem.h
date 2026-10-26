@@ -25,7 +25,7 @@ protected:
 	UFUNCTION()
 	void WormEntered(AWorm* Worm);
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	UStaticMeshComponent* Mesh;
 	UPROPERTY(EditDefaultsOnly)
 	UWormDetectorComponent* Detector;

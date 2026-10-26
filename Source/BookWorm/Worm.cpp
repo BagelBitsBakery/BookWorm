@@ -50,8 +50,8 @@ void AWorm::Tick(float DeltaTime)
 	float DragStrength = (VelStrength / MoveSpeed) * AirDrag;
 	VelStrength -= DragStrength * DeltaTime * TempUnderground;
 	HeadMesh->SetPhysicsLinearVelocity(VelStrength * VelNormal);
-	//Adding 
-	FVector ImpulseAddition = GetActorForwardVector() * MoveSpeed * DeltaTime;
+	//Adding
+	FVector ImpulseAddition = GetActorForwardVector() * MoveSpeed * DeltaTime * ImpulseMult;
 	HeadMesh->AddImpulse(ImpulseAddition * TempUnderground, FName(), true);
 }
 
@@ -69,6 +69,7 @@ void AWorm::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	}
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AWorm::MovementInputPressed);
+		EnhancedInputComponent->BindAction(AccelerateAction, ETriggerEvent::Triggered, this, &AWorm::AccelerateInputPressed);
 	}
 
 }
@@ -78,6 +79,11 @@ void AWorm::MovementInputPressed(const FInputActionValue& Value)
 	FVector2D MovementVal = Value.Get<FVector2D>() * FMath::Lerp(0.35,1.f,UndergroundValue);
 	AddControllerPitchInput(MovementVal.Y);
 	AddControllerYawInput(MovementVal.X);
+}
+
+void AWorm::AccelerateInputPressed(const FInputActionValue& Value)
+{
+	ImpulseMult = 1.f - Value.Get<float>();
 }
 
 void AWorm::GoUnderground()

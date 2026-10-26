@@ -37,6 +37,8 @@ void AWormDroneCamera::Tick(float DeltaTime)
 	//Looking at the actor
 	FVector Forward = FollowActor->GetActorLocation() - GetActorLocation();
 	FRotator Rot = UKismetMathLibrary::MakeRotFromXZ(Forward, FVector::UpVector);
+	Rot.Pitch += FMath::Clamp(FollowActor->GetActorForwardVector().Z,0.0,1.0) * 10.f;
+	Rot.Pitch += 15.f;
 	SetActorRotation(Rot);
 
 	//Moving towards the actor

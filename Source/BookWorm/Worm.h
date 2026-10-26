@@ -36,6 +36,8 @@ protected:
 	UInputMappingContext* MoveInputMap;
 	UPROPERTY(EditDefaultsOnly)
 	UInputAction* MoveAction;
+	UPROPERTY(EditDefaultsOnly)
+	UInputAction* AccelerateAction;
 
 public:	
 	// Called every frame
@@ -50,6 +52,8 @@ public:
 private:
 	UFUNCTION()
 	void MovementInputPressed(const FInputActionValue& Value);
+	UFUNCTION()
+	void AccelerateInputPressed(const FInputActionValue& Value);
 	UFUNCTION()
 	void GoUnderground();
 	UFUNCTION()
@@ -67,6 +71,8 @@ private:
 	float UndergroundValue = 0.0;
 	UPROPERTY()
 	int GroundsCollided = 0;
+	UPROPERTY()
+	float ImpulseMult = 1.f;
 
 	UPROPERTY()
 	TArray<AActor*> ActorsInDig = {};

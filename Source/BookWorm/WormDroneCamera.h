@@ -29,7 +29,7 @@ public:
 	void InitCamPos();
 
 	UPROPERTY()
-	AActor* FollowActor;
+	APawn* FollowActor;
 
 	UPROPERTY()
 	float FlySpeed = 1200.f;
