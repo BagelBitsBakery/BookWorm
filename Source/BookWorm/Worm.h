@@ -10,6 +10,7 @@ class UInputMappingContext;
 class UInputAction;
 class UCameraFollowComponent;
 struct FInputActionValue;
+class USphereComponent;
 
 UCLASS()
 class BOOKWORM_API AWorm : public APawn
@@ -48,6 +49,8 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	UStaticMeshComponent* HeadMesh;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	USphereComponent* Sphere;
 
 private:
 	UFUNCTION()

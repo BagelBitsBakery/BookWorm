@@ -62,6 +62,6 @@ void AScoreBarrier::ReverseWorm(AWorm* Worm)
 {
 	FVector WormVel = Worm->GetVelocity();
 	WormVel *= -1.f;
-	Worm->HeadMesh->SetPhysicsLinearVelocity(WormVel * 1.5);
+	Worm->Sphere->SetPhysicsLinearVelocity(WormVel * 1.5);
 }
 

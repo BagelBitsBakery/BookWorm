@@ -7,6 +7,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "CameraFollowComponent.h"
+#include "Components/SphereComponent.h"
 
 // Sets default values
 AWorm::AWorm()
@@ -14,11 +15,16 @@ AWorm::AWorm()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
+	SetRootComponent(Sphere);
+	Sphere->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
+	Sphere->SetSimulatePhysics(true);
+	Sphere->SetEnableGravity(false);
+	Sphere->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+
 	HeadMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Head Mesh"));
-	HeadMesh->SetupAttachment(RootComponent);
-	HeadMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
-	HeadMesh->SetSimulatePhysics(true);
-	HeadMesh->SetEnableGravity(false);
+	HeadMesh->SetupAttachment(Sphere);
+	HeadMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 
 	Cam = CreateDefaultSubobject<UCameraFollowComponent>(TEXT("Camera"));
 
@@ -31,11 +37,11 @@ void AWorm::BeginPlay()
 {
 	Super::BeginPlay();
 	//redoing this bit here to see if it works now
-	HeadMesh->SetSimulatePhysics(true);
-	HeadMesh->SetEnableGravity(true);
+	Sphere->SetSimulatePhysics(true);
+	Sphere->SetEnableGravity(true);
 
-	HeadMesh->OnComponentBeginOverlap.AddDynamic(this, &AWorm::OverlapBegin);
-	HeadMesh->OnComponentEndOverlap.AddDynamic(this, &AWorm::OverlapEnd);
+	Sphere->OnComponentBeginOverlap.AddDynamic(this, &AWorm::OverlapBegin);
+	Sphere->OnComponentEndOverlap.AddDynamic(this, &AWorm::OverlapEnd);
 }
 
 // Called every frame
@@ -45,14 +51,14 @@ void AWorm::Tick(float DeltaTime)
 	//Drag
 	float TempUnderground = UndergroundValue;
 	if (IsUnderSurface()) TempUnderground = 1.f;
-	float VelStrength = FVector::Distance(HeadMesh->GetPhysicsLinearVelocity(), FVector::Zero());
-	FVector VelNormal = HeadMesh->GetPhysicsLinearVelocity().GetSafeNormal();
+	float VelStrength = FVector::Distance(Sphere->GetPhysicsLinearVelocity(), FVector::Zero());
+	FVector VelNormal = Sphere->GetPhysicsLinearVelocity().GetSafeNormal();
 	float DragStrength = (VelStrength / MoveSpeed) * AirDrag;
 	VelStrength -= DragStrength * DeltaTime * TempUnderground;
-	HeadMesh->SetPhysicsLinearVelocity(VelStrength * VelNormal);
+	Sphere->SetPhysicsLinearVelocity(VelStrength * VelNormal);
 	//Adding
 	FVector ImpulseAddition = GetActorForwardVector() * MoveSpeed * DeltaTime * ImpulseMult;
-	HeadMesh->AddImpulse(ImpulseAddition * TempUnderground, FName(), true);
+	Sphere->AddImpulse(ImpulseAddition * TempUnderground, FName(), true);
 }
 
 // Called to bind functionality to input
@@ -89,13 +95,13 @@ void AWorm::AccelerateInputPressed(const FInputActionValue& Value)
 void AWorm::GoUnderground()
 {
 	UndergroundValue = 1.f;
-	HeadMesh->SetEnableGravity(false);
+	Sphere->SetEnableGravity(false);
 }
 
 void AWorm::GoAboveGround()
 {
 	UndergroundValue = 0.f;
-	HeadMesh->SetEnableGravity(true);
+	Sphere->SetEnableGravity(true);
 }
 
 void AWorm::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -130,9 +136,9 @@ bool AWorm::IsUnderSurface()
 	FCollisionQueryParams Params;
 	GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECollisionChannel::ECC_GameTraceChannel1, Params);
 	if (OutHit.bBlockingHit) {
-		HeadMesh->SetEnableGravity(false);
+		Sphere->SetEnableGravity(false);
 		return true;
 	}
-	if (UndergroundValue != 1.f) HeadMesh->SetEnableGravity(true);
+	if (UndergroundValue != 1.f) Sphere->SetEnableGravity(true);
 	return false;
 }
