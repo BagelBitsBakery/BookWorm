@@ -13,10 +13,19 @@ void AWormMode::BeginPlay()
 	NewScoreWidget->AddToViewport();
 }
 
+void AWormMode::Tick(float DeltaTime)
+{
+	ScoreMultiplier -= DeltaTime / 4.f;
+	ScoreMultiplier = FMath::Clamp(ScoreMultiplier, 1.f, 5.f);
+}
+
 void AWormMode::AlterScore(int ScoreChange)
 {
-	int NewScore = Score + ScoreChange;
+	int NewScore = Score + ScoreChange * ScoreMultiplier;
 	SetScore(NewScore);
+	if (ScoreChange > 0) {
+		ScoreMultiplier += 0.2;
+	}
 }
 
 void AWormMode::SetScore(int NewScore)

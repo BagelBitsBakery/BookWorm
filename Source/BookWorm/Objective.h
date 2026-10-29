@@ -52,4 +52,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnObjectiveEnded);
+	UPROPERTY(BlueprintAssignable)
+	FOnObjectiveEnded OnObjectiveEnded;
+
 };

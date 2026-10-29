@@ -3,6 +3,9 @@
 
 #include "ScoreObject.h"
 #include "ScoreGiveComponent.h"
+#include "Worm.h"
+#include "WormDetectorComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 AScoreObject::AScoreObject() {
 	PrimaryActorTick.bCanEverTick = true;
@@ -12,4 +15,20 @@ AScoreObject::AScoreObject() {
 void AScoreObject::EatEffect()
 {
 	ScoreGive->GiveScore();
+	AWorm* Worm = Cast<AWorm>(UGameplayStatics::GetActorOfClass(GetWorld(), AWorm::StaticClass()));
+	WormGrow(Worm);
+}
+
+void AScoreObject::BeginPlay()
+{
+	Super::BeginPlay();
+	Detector->OnWormEntered.AddDynamic(this, &AScoreObject::WormGrow);
+}
+
+void AScoreObject::WormGrow(AWorm* Worm)
+{
+	FVector Scale = Worm->GetActorScale3D();
+	Scale += FVector(0.01);
+	Worm->SetActorScale3D(Scale);
+	UE_LOG(LogTemp, Display, TEXT("Score Object: Worm grow attempted"));
 }

@@ -25,9 +25,12 @@ void AEdibleObject::Eat()
 {
 	EatEffect();
 	Destroy();
+	OnEaten.Broadcast();
 }
 
 void AEdibleObject::EatEffect()
 {
 }
+
+
 

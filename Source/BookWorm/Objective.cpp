@@ -16,6 +16,7 @@ AObjective::AObjective()
 
 	Detector = CreateDefaultSubobject<UWormDetectorComponent>(TEXT("Worm Detect"));
 	EnterDetection = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
+	Detector->ShapeForDetection = EnterDetection;
 	SetRootComponent(EnterDetection);
 	ScoreGive = CreateDefaultSubobject<UScoreGiveComponent>(TEXT("ScoreGive"));
 }
@@ -47,6 +48,7 @@ void AObjective::EndObjective()
 		Mode->ObjectiveEnded(ObjectiveName);
 	}
 	ScoreGive->GiveScore();
+	OnObjectiveEnded.Broadcast();
 }
 
 void AObjective::UpdateObStatus(FString Status)

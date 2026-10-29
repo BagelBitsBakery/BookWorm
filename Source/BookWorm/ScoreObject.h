@@ -7,6 +7,7 @@
 #include "ScoreObject.generated.h"
 
 class UScoreGiveComponent;
+class AWorm;
 
 /**
  * 
@@ -20,8 +21,11 @@ class BOOKWORM_API AScoreObject : public AEdibleObject
 
 protected:
 	virtual void EatEffect() override;
+	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly)
 	UScoreGiveComponent* ScoreGive;
+	UFUNCTION()
+	void WormGrow(AWorm* Worm);
 	
 };

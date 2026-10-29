@@ -32,4 +32,7 @@ protected:
 
 public:	
 
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEaten);
+	UPROPERTY(BlueprintAssignable)
+	FOnEaten OnEaten;
 };

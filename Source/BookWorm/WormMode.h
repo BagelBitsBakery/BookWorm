@@ -25,7 +25,10 @@ protected:
 	TSubclassOf<UUserWidget> ObjectiveWidgetClass;
 	UPROPERTY()
 	TArray<FName> CurrentActiveObjectives = {};
+	UPROPERTY()
+	float ScoreMultiplier = 1.f;
 public:
+	virtual void Tick(float DeltaTime) override;
 	UFUNCTION()
 	void AlterScore(int ScoreChange);
 	UFUNCTION()
