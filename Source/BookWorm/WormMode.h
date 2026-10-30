@@ -14,6 +14,8 @@ class BOOKWORM_API AWormMode : public AGameModeBase
 {
 	GENERATED_BODY()
 
+	AWormMode();
+
 private:
 	int Score = 0;
 protected:
@@ -43,6 +45,8 @@ public:
 	void ObjectiveStatusChanged(FName ObjectiveName, FString NewStatus);
 	UFUNCTION()
 	bool HasObjective(FName ObjectiveName);
+	UFUNCTION(BlueprintCallable)
+	float GetComboMultiplier();
 	
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnScoreChanged,int,NewScore);
 	UPROPERTY(BlueprintAssignable)

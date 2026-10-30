@@ -5,6 +5,11 @@
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
 
+AWormMode::AWormMode() {
+	PrimaryActorTick.bStartWithTickEnabled = true;
+	PrimaryActorTick.bCanEverTick = true;
+}
+
 void AWormMode::BeginPlay()
 {
 	UUserWidget* NewWidget = CreateWidget<UUserWidget>(GetWorld(),ScoreWidgetClass);
@@ -15,7 +20,7 @@ void AWormMode::BeginPlay()
 
 void AWormMode::Tick(float DeltaTime)
 {
-	ScoreMultiplier -= DeltaTime / 4.f;
+	ScoreMultiplier -= DeltaTime / 25.f;
 	ScoreMultiplier = FMath::Clamp(ScoreMultiplier, 1.f, 5.f);
 }
 
@@ -65,4 +70,9 @@ void AWormMode::ObjectiveStatusChanged(FName ObjectiveName, FString NewStatus)
 bool AWormMode::HasObjective(FName ObjectiveName)
 {
 	return CurrentActiveObjectives.Contains(ObjectiveName);
+}
+
+float AWormMode::GetComboMultiplier()
+{
+	return floor(ScoreMultiplier * 100.f)/100.f;
 }
