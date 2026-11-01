@@ -58,7 +58,7 @@ void AWorm::Tick(float DeltaTime)
 	Sphere->SetPhysicsLinearVelocity(VelStrength * VelNormal);
 	//Adding
 	FVector ImpulseAddition = GetActorForwardVector() * MoveSpeed * DeltaTime * ImpulseMult;
-	Sphere->AddImpulse(ImpulseAddition * TempUnderground, FName(), true);
+	Sphere->AddImpulse(ImpulseAddition * FMath::Lerp(0.15,1.0,TempUnderground), FName(), true);
 }
 
 // Called to bind functionality to input
@@ -89,7 +89,7 @@ void AWorm::MovementInputPressed(const FInputActionValue& Value)
 
 void AWorm::AccelerateInputPressed(const FInputActionValue& Value)
 {
-	ImpulseMult = 1.f - Value.Get<float>();
+	ImpulseMult = Value.Get<float>();
 }
 
 void AWorm::GoUnderground()
@@ -102,6 +102,13 @@ void AWorm::GoAboveGround()
 {
 	UndergroundValue = 0.f;
 	Sphere->SetEnableGravity(true);
+
+	//making the worm jump out of the ground
+	FVector SphereVel = Sphere->GetComponentVelocity();
+	float VelStrength = FMath::Abs(FVector::Distance(SphereVel, FVector::Zero()));
+	if (SphereVel.Z > 15.f) {
+		Sphere->AddImpulse(SphereVel * 0.2 * (VelStrength / MoveSpeed), FName(), true);
+	}
 }
 
 void AWorm::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

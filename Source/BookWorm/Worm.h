@@ -78,7 +78,7 @@ private:
 	UPROPERTY()
 	int GroundsCollided = 0;
 	UPROPERTY()
-	float ImpulseMult = 1.f;
+	float ImpulseMult = 0.f;
 
 	UPROPERTY()
 	TArray<AActor*> ActorsInDig = {};
