@@ -6,11 +6,11 @@
 #include "GameFramework/Pawn.h"
 #include "Worm.generated.h"
 
-class UCameraComponent;
-class USpringArmComponent;
 class UInputMappingContext;
 class UInputAction;
+class UCameraFollowComponent;
 struct FInputActionValue;
+class USphereComponent;
 
 UCLASS()
 class BOOKWORM_API AWorm : public APawn
@@ -26,11 +26,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	UCameraComponent* Cam;
-	UPROPERTY(EditDefaultsOnly)
-	USpringArmComponent* SpringArm;
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	UStaticMeshComponent* HeadMesh;
+	UCameraFollowComponent* Cam;
 	UPROPERTY(EditDefaultsOnly)
 	float MoveSpeed = 1000.f;
 	UPROPERTY(EditDefaultsOnly)
@@ -41,17 +37,29 @@ protected:
 	UInputMappingContext* MoveInputMap;
 	UPROPERTY(EditDefaultsOnly)
 	UInputAction* MoveAction;
+	UPROPERTY(EditDefaultsOnly)
+	UInputAction* AccelerateAction;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void EatEffect();
+
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UStaticMeshComponent* HeadMesh;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	USphereComponent* Sphere;
 
 private:
 	UFUNCTION()
 	void MovementInputPressed(const FInputActionValue& Value);
+	UFUNCTION()
+	void AccelerateInputPressed(const FInputActionValue& Value);
 	UFUNCTION()
 	void GoUnderground();
 	UFUNCTION()
@@ -61,9 +69,17 @@ private:
 
 	UFUNCTION()
 	void OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	UFUNCTION()
+	bool IsUnderSurface();
+	
 
 	UPROPERTY()
 	float UndergroundValue = 0.0;
 	UPROPERTY()
 	int GroundsCollided = 0;
+	UPROPERTY()
+	float ImpulseMult = 0.f;
+
+	UPROPERTY()
+	TArray<AActor*> ActorsInDig = {};
 };
