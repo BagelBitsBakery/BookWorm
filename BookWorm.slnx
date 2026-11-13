@@ -10,33 +10,25 @@
     <Platform Name="Win64-arm64ec" />
   </Configurations>
   <Folder Name="/Engine/">
-    <Project Path="Intermediate/ProjectFiles/UE5.vcxproj" Id="b7bc9fbd-306d-37fa-ac92-22cfd437f840">
+    <Project Path="Intermediate/ProjectFiles/UE5.vcxproj" Id="5e6d93b9-b3e4-31a9-b58f-d0d4db286f58">
       <BuildType Project="BuiltWithUnrealBuildTool" />
       <Platform Project="Win64" />
       <Build Project="false" />
     </Project>
   </Folder>
   <Folder Name="/Games/">
-    <Project Path="Intermediate/ProjectFiles/BookWorm.vcxproj" Id="c2510101-1073-3056-a144-d89a5f5b1c7a">
-      <BuildType Solution="DebugGame Editor|Win64" Project="DebugGame_Editor" />
-      <BuildType Solution="DebugGame Editor|Win64-arm64" Project="Win64_arm64_DebugGame_Editor" />
-      <BuildType Solution="DebugGame Editor|Win64-arm64ec" Project="Win64_arm64ec_DebugGame_Editor" />
-      <BuildType Solution="DebugGame|Win64-arm64" Project="Win64_arm64_DebugGame" />
-      <BuildType Solution="DebugGame|Win64-arm64ec" Project="Win64_arm64ec_DebugGame" />
-      <BuildType Solution="Development Editor|Win64" Project="Development_Editor" />
-      <BuildType Solution="Development Editor|Win64-arm64" Project="Win64_arm64_Development_Editor" />
-      <BuildType Solution="Development Editor|Win64-arm64ec" Project="Win64_arm64ec_Development_Editor" />
-      <BuildType Solution="Development|Win64-arm64" Project="Win64_arm64_Development" />
-      <BuildType Solution="Development|Win64-arm64ec" Project="Win64_arm64ec_Development" />
-      <BuildType Solution="Shipping|Win64-arm64" Project="Win64_arm64_Shipping" />
-      <BuildType Solution="Shipping|Win64-arm64ec" Project="Win64_arm64ec_Shipping" />
-      <Platform Project="x64" />
+    <Project Path="Intermediate/ProjectFiles/BookWorm.vcxproj" Id="2b18b142-0bcf-3119-ba99-cacfc3539d4d">
+      <BuildType Solution="DebugGame Editor|*" Project="DebugGame_Editor" />
+      <BuildType Solution="Development Editor|*" Project="Development_Editor" />
+      <Platform Solution="*|Win64" Project="x64" />
+      <Platform Solution="*|Win64-arm64" Project="arm64" />
+      <Platform Solution="*|Win64-arm64ec" Project="arm64ec" />
     </Project>
   </Folder>
   <Folder Name="/Visualizers/">
-    <File Path="../../../../../../Program Files/Epic Games/UE_5.8/Engine/Extras/VisualStudioDebugging/Unreal.natjmc" />
-    <File Path="../../../../../../Program Files/Epic Games/UE_5.8/Engine/Extras/VisualStudioDebugging/Unreal.natstepfilter" />
-    <File Path="../../../../../../Program Files/Epic Games/UE_5.8/Engine/Extras/VisualStudioDebugging/Unreal.natvis" />
+    <File Path="C:/Program Files/Epic Games/UE_5.8/Engine/Extras/VisualStudioDebugging/Unreal.natjmc" />
+    <File Path="C:/Program Files/Epic Games/UE_5.8/Engine/Extras/VisualStudioDebugging/Unreal.natstepfilter" />
+    <File Path="C:/Program Files/Epic Games/UE_5.8/Engine/Extras/VisualStudioDebugging/Unreal.natvis" />
   </Folder>
   <Properties Name="ddbf523f-7eb6-4887-bd51-85a714ff87eb">
     <Property Name="AvailablePlatforms" Value="Win64" />
