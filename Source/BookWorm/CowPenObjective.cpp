@@ -5,6 +5,7 @@
 #include "Components/BoxComponent.h"
 
 ACowPenObjective::ACowPenObjective() {
+	//Creating box collision
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("Box Collision"));
 	BoxCollision->SetupAttachment(RootComponent);
 }

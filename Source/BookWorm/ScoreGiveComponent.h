@@ -20,10 +20,12 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	//The score that will be added and sent to the game mode
 	UPROPERTY(EditDefaultsOnly)
 	int ScoreToGive = 0;
 
 public:	
+	//Call to give the score, handles all the score giving.
 	UFUNCTION()
 	void GiveScore();
 };

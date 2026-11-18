@@ -7,6 +7,7 @@
 
 void AFinalObject::EatEffect()
 {
+	//Creating widget and adding it to the screen
 	UUserWidget* NewWidget = CreateWidget<UUserWidget>(GetWorld(), WidgetClass);
 	NewWidget->AddToViewport();
 

@@ -21,7 +21,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
+	//Child Components
 	UPROPERTY(EditDefaultsOnly)
 	UWormDetectorComponent* Detector;
 	UPROPERTY(EditDefaultsOnly)
@@ -35,17 +35,21 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	//Allows for the checkpoint to alert entrance
 	UFUNCTION()
 	void ActivateCheckpoint();
+	//Stops checkpoint alerting entrance
 	UFUNCTION()
 	void DeactivateCheckpoint();
+	//Called when worm detector detects the worm
 	UFUNCTION()
 	void CheckpointEntered();
-
+	//Property to track if it should allow for detection
 	UPROPERTY()
 	bool IsCurrent = false;
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCheckpointEntered);
+	//Called when the checkpoint is active and detects the worm
 	UPROPERTY()
 	FOnCheckpointEntered OnCheckpointEntered;
 

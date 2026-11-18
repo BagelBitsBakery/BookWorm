@@ -22,9 +22,10 @@ class BOOKWORM_API AScoreObject : public AEdibleObject
 protected:
 	virtual void EatEffect() override;
 	virtual void BeginPlay() override;
-
+	//Child components
 	UPROPERTY(EditDefaultsOnly)
 	UScoreGiveComponent* ScoreGive;
+	//Increases the scale of the worm
 	UFUNCTION()
 	void WormGrow(AWorm* Worm);
 	

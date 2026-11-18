@@ -12,6 +12,7 @@ AWormMode::AWormMode() {
 
 void AWormMode::BeginPlay()
 {
+	//Setting up the initial UI
 	UUserWidget* NewWidget = CreateWidget<UUserWidget>(GetWorld(),ScoreWidgetClass);
 	NewWidget->AddToViewport();
 	UUserWidget* NewScoreWidget = CreateWidget<UUserWidget>(GetWorld(), ObjectiveWidgetClass);
@@ -20,6 +21,7 @@ void AWormMode::BeginPlay()
 
 void AWormMode::Tick(float DeltaTime)
 {
+	//Slowly lowering the score multiplier
 	ScoreMultiplier -= DeltaTime / 25.f;
 	ScoreMultiplier = FMath::Clamp(ScoreMultiplier, 1.f, 5.f);
 }
@@ -37,7 +39,6 @@ void AWormMode::SetScore(int NewScore)
 {
 	Score = NewScore;
 	OnScoreChanged.Broadcast(NewScore);
-	UE_LOG(LogTemp, Display, TEXT("Score Changed %i"), Score);
 }
 
 int AWormMode::GetScore()
@@ -47,6 +48,7 @@ int AWormMode::GetScore()
 
 void AWormMode::ObjectiveStarted(FName ObjectiveName)
 {
+	//Stopping the code if the objective is already going on
 	if (CurrentActiveObjectives.Contains(ObjectiveName)) return;
 	CurrentActiveObjectives.Add(ObjectiveName);
 	OnObjectiveAdded.Broadcast(ObjectiveName);
@@ -54,7 +56,9 @@ void AWormMode::ObjectiveStarted(FName ObjectiveName)
 
 void AWormMode::ObjectiveEnded(FName ObjectiveName)
 {
+	//Stopping the code if the objective is not already active
 	if (!CurrentActiveObjectives.Contains(ObjectiveName)) return;
+	//Finding the the index that the objective is in to be passed elsewhere
 	int ObjectiveIndex = CurrentActiveObjectives.Find(ObjectiveName);
 	CurrentActiveObjectives.RemoveAt(ObjectiveIndex);
 	OnObjectiveRemoved.Broadcast(ObjectiveIndex);
@@ -62,7 +66,9 @@ void AWormMode::ObjectiveEnded(FName ObjectiveName)
 
 void AWormMode::ObjectiveStatusChanged(FName ObjectiveName, FString NewStatus)
 {
+	//Stopping the code if the objective is not already active
 	if (!CurrentActiveObjectives.Contains(ObjectiveName)) return;
+	//Finding the the index that the objective is in to be passed elsewhere
 	int ObjectiveIndex = CurrentActiveObjectives.Find(ObjectiveName);
 	OnObjectiveUpdated.Broadcast(ObjectiveIndex, NewStatus);
 }

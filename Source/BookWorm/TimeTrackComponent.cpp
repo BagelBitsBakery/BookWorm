@@ -15,6 +15,7 @@ UTimeTrackComponent::UTimeTrackComponent()
 void UTimeTrackComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	//More helping to get the component to use the tick function
 	RegisterComponent();
 	SetComponentTickEnabled(false);
 	
@@ -32,12 +33,14 @@ void UTimeTrackComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 
 void UTimeTrackComponent::StartRaceTimer()
 {
+	//Adding the widget
 	if (!IsValid(TimerDisplay)) {
 		TimerDisplay = CreateWidget<UTimerWidget>(GetOwner()->GetWorld(), TimerWidgetClass);
 		UE_LOG(LogTemp, Display, TEXT("Time Track Component: Timer Widget Create"));
 	};
 	TimerDisplay->AddToViewport();
 	TimerDisplay->UpdateTimer(0.f);
+	//Enabling tick so the timer updates
 	SetComponentTickEnabled(true);
 	TimeElapsed = 0.f;
 	UE_LOG(LogTemp, Display, TEXT("Time Track Component: Timer Started"));
@@ -45,6 +48,7 @@ void UTimeTrackComponent::StartRaceTimer()
 
 void UTimeTrackComponent::EndRaceTimer()
 {
+	//Stopping tick, stopping the timer
 	SetComponentTickEnabled(false);
 	TimerDisplay->RemoveFromViewport();
 }

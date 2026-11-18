@@ -16,7 +16,8 @@ class BOOKWORM_API AFinalObject : public AEdibleObject
 
 protected:
 	virtual void EatEffect() override;
-	
+
+	//Widget class that is created when the object is eaten
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UUserWidget> WidgetClass;
 };

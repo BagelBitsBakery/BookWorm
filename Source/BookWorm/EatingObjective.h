@@ -26,6 +26,7 @@ private:
 protected:
 	virtual void BeginPlay() override;
 public:
+	//Array of edible objects meant to be set in editor. Objective ends when all objects in this array are eaten
 	UPROPERTY(EditAnywhere)
 	TArray<AEdibleObject*> OnesThatNeedEating;
 

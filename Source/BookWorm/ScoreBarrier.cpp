@@ -14,7 +14,7 @@ AScoreBarrier::AScoreBarrier()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	//setup child components
 	Detector = CreateDefaultSubobject<UWormDetectorComponent>(TEXT("Detector"));
 	
 	Collision = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collision"));
@@ -34,7 +34,7 @@ void AScoreBarrier::BeginPlay()
 	Super::BeginPlay();
 	
 	Detector->OnWormEntered.AddDynamic(this, &AScoreBarrier::ReverseWorm);
-
+	//Making it so when the score changes is automatically compares
 	if (AWormMode* WormMode = Cast<AWormMode>(UGameplayStatics::GetGameMode(GetWorld()))) {
 		WormMode->OnScoreChanged.AddDynamic(this, &AScoreBarrier::CompareScore);
 	}

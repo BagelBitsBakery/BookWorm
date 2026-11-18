@@ -18,8 +18,10 @@ public:
 	UTimeTrackComponent();
 
 private:
+	//The time that elapsed since the timer was last started
 	UPROPERTY()
 	float TimeElapsed = 0.f;
+	//Widget instance to display the timer
 	UPROPERTY()
 	UTimerWidget* TimerDisplay;
 
@@ -30,14 +32,16 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
+	//Resets and starts the timer
 	UFUNCTION()
 	void StartRaceTimer();
+	//Stops the timer
 	UFUNCTION()
 	void EndRaceTimer();
+	//returns the time since the timer was last started
 	UFUNCTION()
 	float GetRaceTime();
-
+	//Widget class to display the timer
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UTimerWidget> TimerWidgetClass;
 		

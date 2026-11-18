@@ -13,7 +13,7 @@ AObjective::AObjective()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	//Setting up components
 	Detector = CreateDefaultSubobject<UWormDetectorComponent>(TEXT("Worm Detect"));
 	EnterDetection = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
 	Detector->ShapeForDetection = EnterDetection;
@@ -30,8 +30,10 @@ void AObjective::BeginPlay()
 
 void AObjective::StartObjective()
 {
+	//Cancelling if active or complete
 	if (IsActive or IsComplete) return;
 	IsActive = true;
+	//Updating Game Mode
 	if (AWormMode* Mode = Cast<AWormMode>(UGameplayStatics::GetGameMode(GetWorld()))) {
 		Mode->ObjectiveStarted(ObjectiveName);
 		UE_LOG(LogTemp, Display, TEXT("Objective Start Attempted"));
@@ -41,9 +43,11 @@ void AObjective::StartObjective()
 
 void AObjective::EndObjective()
 {
+	//Stopping if not active
 	if (!IsActive or IsComplete) return;
 	IsActive = true;
 	IsComplete = true;
+	//Updating Game Mode
 	if (AWormMode* Mode = Cast<AWormMode>(UGameplayStatics::GetGameMode(GetWorld()))) {
 		Mode->ObjectiveEnded(ObjectiveName);
 	}
@@ -53,15 +57,8 @@ void AObjective::EndObjective()
 
 void AObjective::UpdateObStatus(FString Status)
 {
+	//Updating game mode
 	if (AWormMode* Mode = Cast<AWormMode>(UGameplayStatics::GetGameMode(GetWorld()))) {
 		Mode->ObjectiveStatusChanged(ObjectiveName,Status);
 	}
 }
-
-// Called every frame
-void AObjective::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-

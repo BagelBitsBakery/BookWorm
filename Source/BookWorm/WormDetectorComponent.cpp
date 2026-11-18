@@ -15,11 +15,12 @@ void UWormDetectorComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//Checks if the shape or component ref for shape are valid
 	if (!IsValid(ShapeForDetection))
+		//Turns the component ref into a shape component
 		ShapeForDetection = Cast<UShapeComponent>(ComponentRef.GetComponent(GetOwner()));
 	if (IsValid(ShapeForDetection)) {
 		ShapeForDetection->OnComponentBeginOverlap.AddDynamic(this, &UWormDetectorComponent::OverlapBegin);
-		//ShapeForDetection->AttachToComponent(GetOwner()->GetRootComponent(),FAttachmentTransformRules(EAttachmentRule::KeepRelative,true));
 	}
 	else {
 		UE_LOG(LogTemp, Error, TEXT("Worm Detect Has No Shape %s"),*GetOwner()->GetName());

@@ -23,6 +23,7 @@ void UScoreGiveComponent::BeginPlay()
 
 void UScoreGiveComponent::GiveScore()
 {
+	//updates the game mode
 	AWormMode* WormMode = Cast<AWormMode>(UGameplayStatics::GetGameMode(GetWorld()));
 	if (!IsValid(WormMode)) {
 		return;

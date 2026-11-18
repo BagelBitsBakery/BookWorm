@@ -22,9 +22,11 @@ protected:
 	virtual void BeginPlay() override;
 	UFUNCTION()
 	void Eat();
+	//A functio  that will be called when eaten, meant to be overriden by child classes.
 	UFUNCTION()
 	virtual void EatEffect();
 
+	//Child components
 	UPROPERTY(EditDefaultsOnly)
 	UStaticMeshComponent* Mesh;
 	UPROPERTY(EditDefaultsOnly)
@@ -33,6 +35,7 @@ protected:
 public:	
 
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEaten);
+	//Broadcast when the object has been eaten by the worm
 	UPROPERTY(BlueprintAssignable)
 	FOnEaten OnEaten;
 };

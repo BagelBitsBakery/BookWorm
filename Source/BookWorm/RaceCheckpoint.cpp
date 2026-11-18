@@ -10,7 +10,7 @@ ARaceCheckpoint::ARaceCheckpoint()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	//Setting up child components
 	Detector = CreateDefaultSubobject<UWormDetectorComponent>(TEXT("Detector"));
 	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
 	SetRootComponent(Sphere);
@@ -19,6 +19,7 @@ ARaceCheckpoint::ARaceCheckpoint()
 	CheckpointMesh->SetupAttachment(Sphere);
 	CurrentMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("CurrentMesh"));
 	CurrentMesh->SetupAttachment(Sphere);
+	//Making meshes ignore everything
 	CheckpointMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	CurrentMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	CurrentMesh->SetVisibility(false);

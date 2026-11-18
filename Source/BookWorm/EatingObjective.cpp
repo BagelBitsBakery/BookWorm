@@ -19,6 +19,7 @@ void AEatingObjective::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//Setting up edible objects
 	for (AEdibleObject* Obj : OnesThatNeedEating) {
 		Obj->OnEaten.AddDynamic(this, &AEatingObjective::Eaten);
 	}

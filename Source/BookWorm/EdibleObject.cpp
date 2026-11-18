@@ -9,6 +9,7 @@ AEdibleObject::AEdibleObject()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	//setting up child components
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(RootComponent);
 	Detector = CreateDefaultSubobject<UWormDetectorComponent>(TEXT("Detection"));
@@ -21,6 +22,7 @@ void AEdibleObject::BeginPlay()
 	Detector->OnWormDetected.AddDynamic(this, &AEdibleObject::Eat);
 }
 
+//Called when worm detector detects worm
 void AEdibleObject::Eat()
 {
 	EatEffect();
@@ -28,6 +30,7 @@ void AEdibleObject::Eat()
 	OnEaten.Broadcast();
 }
 
+//KEEP EMPTY IN THIS CLASS
 void AEdibleObject::EatEffect()
 {
 }

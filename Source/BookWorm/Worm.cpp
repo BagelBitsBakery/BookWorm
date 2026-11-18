@@ -113,8 +113,10 @@ void AWorm::GoAboveGround()
 
 void AWorm::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	//Checking ground validity
 	if (OtherActor->ActorHasTag("DigGround")) {
 		if (ActorsInDig.Contains(OtherActor)) return;
+		//checks collide amount
 		GroundsCollided += 1;
 		ActorsInDig.Add(OtherActor);
 		if (GroundsCollided > 0 and UndergroundValue < 1.f) {
@@ -125,7 +127,9 @@ void AWorm::OverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Other
 
 void AWorm::OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
+	//Checking ground validity
 	if (OtherActor->ActorHasTag("DigGround")) {
+		//checks collide amount
 		GroundsCollided -= 1;
 		ActorsInDig.Remove(OtherActor);
 		if (GroundsCollided < 1 and UndergroundValue > 0.f) {
@@ -136,6 +140,7 @@ void AWorm::OverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherAc
 
 bool AWorm::IsUnderSurface()
 {
+	//Makes raycast
 	FHitResult OutHit = FHitResult();
 	FVector ActorPos = GetActorLocation();
 	FVector Start = FVector(0.f, 0.f, 75000);
@@ -143,6 +148,7 @@ bool AWorm::IsUnderSurface()
 	FCollisionQueryParams Params;
 	GetWorld()->LineTraceSingleByChannel(OutHit, Start, End, ECollisionChannel::ECC_GameTraceChannel1, Params);
 	if (OutHit.bBlockingHit) {
+		//Disables gravity because they are technically underground
 		Sphere->SetEnableGravity(false);
 		return true;
 	}

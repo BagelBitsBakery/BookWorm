@@ -11,6 +11,7 @@ AWormDroneCamera::AWormDroneCamera()
 
 void AWormDroneCamera::BeginPlay()
 {
+	// :)
 	Super::BeginPlay();
 
 }

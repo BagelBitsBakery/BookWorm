@@ -30,6 +30,5 @@ void AScoreObject::WormGrow(AWorm* Worm)
 	FVector Scale = Worm->GetActorScale3D();
 	Scale += FVector(0.01);
 	Worm->SetActorScale3D(Scale);
-	UE_LOG(LogTemp, Display, TEXT("Score Object: Worm grow attempted"));
 	Worm->EatEffect();
 }
