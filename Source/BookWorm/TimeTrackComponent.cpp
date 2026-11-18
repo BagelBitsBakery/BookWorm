@@ -7,7 +7,7 @@
 UTimeTrackComponent::UTimeTrackComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
-	RegisterComponent();
+	//RegisterComponent();
 }
 
 
