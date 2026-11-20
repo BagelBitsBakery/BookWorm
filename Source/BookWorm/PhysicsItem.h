@@ -28,13 +28,13 @@ protected:
 	//Child components
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	UStaticMeshComponent* Mesh;
-	UPROPERTY(EditDefaultsOnly)
-	UWormDetectorComponent* Detector;
+	
 	//Multiplies the force given by the worm by this property
 	UPROPERTY(EditDefaultsOnly)
 	float LaunchMultiplier = 1.f;
 
 
 public:	
-
+	UPROPERTY(EditDefaultsOnly)
+	UWormDetectorComponent* Detector;
 };

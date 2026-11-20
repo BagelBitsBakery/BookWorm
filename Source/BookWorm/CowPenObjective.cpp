@@ -3,6 +3,8 @@
 
 #include "CowPenObjective.h"
 #include "Components/BoxComponent.h"
+#include "PhysicsItem.h"
+#include "WormDetectorComponent.h"
 
 ACowPenObjective::ACowPenObjective() {
 	//Creating box collision
@@ -21,6 +23,19 @@ void ACowPenObjective::BoxOverlapBegin(UPrimitiveComponent* OverlappedComponent,
 	if (OtherActor->ActorHasTag("Cow") and !ActorsInPen.Contains(OtherActor)) {
 		CowEntered();
 		ActorsInPen.Add(OtherActor);
+		OtherActor->SetActorTickEnabled(false);
+		FAttachmentTransformRules Rules = FAttachmentTransformRules(EAttachmentRule::KeepWorld, true);
+		OtherActor->AttachToActor(this, Rules);
+
+		if (APhysicsItem* Item = Cast<APhysicsItem>(OtherActor)) Item->Detector->ShapeForDetection->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+
+		OtherActor->SetActorLocation(
+			FVector(
+				FMath::RandRange(-200, 200),
+				50,
+				FMath::RandRange(-100, 100)
+			) + GetActorLocation()
+		);
 	}
 }
 
